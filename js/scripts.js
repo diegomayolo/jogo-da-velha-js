@@ -27,18 +27,46 @@ for ( let i = 0; i < boxes.length; i++ )
             // computar jogada
             if ( player1 == player2 )
             {
-                player1++
+                player1++;
+
+                if ( secondPlayer = 'ia-player' )
+                {
+                    //função pra executar jogada
+                    computerPlay();
+                    player2++;
+                }
             }
-            
+
             else
             {
-                player2++
+                player2++;
             }
 
             // checa quem venceu
             checkWinCondition();
         }
     } );
+}
+
+// evento paa saber se é 2player ou ia
+for ( let i = 0; i < buttons.length; i++ )
+{
+    buttons[i].addEventListener( "click", function()
+    {
+        secondPlayer = this.getAttribute( "id" );
+
+        for ( let y = 0; y < buttons.length; y++ )
+        {
+            buttons[y].style.display = 'none';    
+        }
+
+        setTimeout(function () 
+        {
+            let container = document.querySelector( "#container" );
+            container.classList.remove( "hide" );    
+        })
+    });
+    
 }
 
 function checkEl( player1, player2 ) 
@@ -269,4 +297,39 @@ function declareWinner( winner )
    {
       boxesToRemove[i].parentNode.removeChild( boxesToRemove[i] );
    }
+}
+
+// executar a logica da jogada da cpu
+function computerPlay()
+{
+    let cloneO = o.cloneNode( true );
+    counter = 0;
+    filled = 0;
+
+    for ( let i = 0; i < boxes.length; i++ )
+    {
+        let randomNumber = Math.floor( Match.random() * 5 );
+        
+        // preencher se esctiver vazio o filho
+        if (  boxes[i].childNodes[0] == undefined )
+        {
+            if ( randomNumber <= 1 )
+            {
+                boxes[i].appendChild( cloneO );
+                counter++;
+                break;
+            }
+        }
+
+        // checagem de quantas boxes estão preenchidas
+        else
+        {
+            filled++;
+        }
+    }
+
+    if ( counter == 0 && filled < 9 )
+    {   
+        computerPlay();
+    }
 }
