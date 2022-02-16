@@ -308,7 +308,7 @@ function computerPlay()
 
     for ( let i = 0; i < boxes.length; i++ )
     {
-        let randomNumber = Math.floor( Match.random() * 5 );
+        let randomNumber = Math.floor( Math.random() * 5 );
         
         // preencher se esctiver vazio o filho
         if (  boxes[i].childNodes[0] == undefined )
